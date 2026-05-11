@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Isac Santos — Portfólio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --surface: #101010;
+      --border: rgba(255,255,255,0.07);
+      --text: #f0ede6;
+      --muted: #6b6860;
+      --accent: #c8b89a;
+      --accent-dim: rgba(200,184,154,0.15);
+      --accent-line: rgba(200,184,154,0.4);
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 4rem;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── SECTIONS ── */
+    section { padding: 8rem 4rem; max-width: 1100px; margin: 0 auto; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 10rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s ease forwards;
+    }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 9vw, 8rem);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s ease forwards;
+    }
+    .hero-name em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+    }
+    .hero-subtitle {
+      margin-top: 2rem;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.9;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s ease forwards;
+    }
+    .hero-cta {
+      margin-top: 3rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s ease forwards;
+    }
+    .btn-primary {
+      padding: 0.75rem 2rem;
+      border: 1px solid var(--accent-line);
+      background: var(--accent-dim);
+      color: var(--accent);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s, border-color 0.3s;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background: rgba(200,184,154,0.25);
+      border-color: var(--accent);
+    }
+    .btn-ghost {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .btn-ghost:hover { color: var(--text); }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 3rem; left: 4rem;
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 1s 1.2s ease forwards;
+    }
+    .scroll-line {
+      width: 40px; height: 1px;
+      background: var(--muted);
+    }
+    .hero-bg-text {
+      position: absolute;
+      bottom: -2rem; right: -1rem;
+      font-family: var(--font-display);
+      font-size: clamp(10rem, 20vw, 18rem);
+      font-weight: 600;
+      color: rgba(255,255,255,0.025);
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 100%; height: 1px;
+      background: var(--border);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3.5rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 0 0 40px;
+      height: 1px;
+      background: var(--accent-line);
+    }
+
+    /* ── SOBRE ── */
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .sobre-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 300;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+    }
+    .sobre-heading em { font-style: italic; color: var(--accent); }
+    .sobre-body {
+      color: rgba(240,237,230,0.75);
+      font-size: 0.95rem;
+      line-height: 2;
+    }
+    .sobre-body p + p { margin-top: 1.25rem; }
+
+    /* ── JORNADA ── */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.4rem; bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: none; }
+    .timeline-dot {
+      position: absolute;
+      left: -2.4rem; top: 0.45rem;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      border: 1px solid var(--accent);
+      background: var(--bg);
+    }
+    .timeline-year {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .timeline-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-desc {
+      font-size: 0.9rem;
+      color: rgba(240,237,230,0.6);
+      line-height: 1.9;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .skill-card {
+      background: var(--surface);
+      padding: 2rem;
+      transition: background 0.3s;
+    }
+    .skill-card:hover { background: #161616; }
+    .skill-card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
+    .skill-card-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+    }
+    .skill-card-text {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+    .skill-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      padding: 0.25rem 0.75rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* ── MOTIVAÇÃO ── */
+    .quote-block {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .quote-mark {
+      font-family: var(--font-display);
+      font-size: 5rem;
+      line-height: 0.5;
+      color: var(--accent-line);
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+    .quote-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    .quote-author {
+      margin-top: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── CONTATO ── */
+    .contato-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .contato-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.2;
+    }
+    .contato-heading em { font-style: italic; color: var(--accent); }
+    .contato-text {
+      margin-top: 1.5rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.9;
+    }
+    .contato-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contato-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.9rem;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .contato-link:hover {
+      border-color: var(--accent-line);
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+    .contato-link-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 100%;
+    }
+    .footer-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 1.5rem; }
+      .sobre-grid, .contato-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .hero-bg-text { display: none; }
+      .hero-scroll-hint { left: 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">IS</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#jornada">Jornada</a></li>
+    <li><a href="#skills">Habilidades</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <span class="hero-tag">Estudante de Ciência da Computação</span>
+  <h1 class="hero-name">Isac<br /><em>Santos</em></h1>
+  <p class="hero-subtitle">
+    Explorando os limites entre código, sistemas e segurança digital.
+  </p>
+  <div class="hero-cta">
+    <a href="#jornada" class="btn-primary">Ver minha jornada</a>
+    <a href="#contato" class="btn-ghost">Entrar em contato →</a>
+  </div>
+  <div class="hero-scroll-hint">
+    <span class="scroll-line"></span>
+    Scroll para explorar
+  </div>
+  <div class="hero-bg-text" aria-hidden="true">IS</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="section-label">01 — Sobre mim</div>
+  <div class="sobre-grid">
+    <div class="reveal">
+      <h2 class="sobre-heading">
+        Curioso por natureza,<br /><em>metódico</em> por escolha
+      </h2>
+    </div>
+    <div class="sobre-body reveal" style="transition-delay: 0.15s">
+      <p>
+        Me chamo Isac Santos e estou no início de uma jornada pela Ciência da Computação. Desde que comecei a entender como os sistemas digitais funcionam por dentro, percebi que quero construir — e proteger — esse mundo.
+      </p>
+      <p>
+        Meu interesse se divide entre a lógica da programação e o universo da cibersegurança.
+      </p>
+      <p>
+       
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- JORNADA -->
+<section id="jornada">
+  <div class="section-label">02 — Jornada</div>
+  <div class="timeline">
+
+    
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">Fundamentos</div>
+      <div class="timeline-title">Ciência da Computação</div>
+      <p class="timeline-desc">
+        Mergulhei nos fundamentos: lógica de programação, estruturas de dados, sistemas operacionais e redes. Cada conceito novo abre uma porta para dez outros — e eu entro em todas.
+      </p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">Explorando</div>
+      <div class="timeline-title">Primeiros passos em cibersegurança</div>
+      <p class="timeline-desc">
+        Estudando os conceitos de segurança ofensiva e defensiva,ethcical hacker,fundamentos de cibersecurity.
+      </p>
+    </div>
+
+    
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">03 — Habilidades</div>
+  <div class="skills-grid reveal">
+
+    <div class="skill-card">
+      <div class="skill-card-icon">&lt;/&gt;</div>
+      <div class="skill-card-title">Programação</div>
+      <p class="skill-card-text">Lógica de programação, algoritmos e estruturas de dados. Aprendendo a pensar computacionalmente antes de pensar em sintaxe.</p>
+      <div class="skill-tags">
+        <span class="skill-tag">C</span>
+        <span class="skill-tag">Lógica</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-card-icon">&#9633;</div>
+      <div class="skill-card-title">Ciência da Computação</div>
+      <p class="skill-card-text">Fundamentos sólidos em sistemas operacionais, redes de computadores e arquitetura. A base que torna tudo o mais possível.</p>
+      <div class="skill-tags">
+        <span class="skill-tag">Redes</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-card-icon">&#9650;</div>
+      <div class="skill-card-title">Cibersegurança</div>
+      <p class="skill-card-text">Iniciando no universo de segurança digital: conceitos de ethical hacking, análise de vulnerabilidades e pensamento defensivo.</p>
+      <div class="skill-tags">
+        <span class="skill-tag">Segurança</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MOTIVAÇÃO -->
+<section id="motivacao">
+  <div class="quote-block reveal">
+    <span class="quote-mark">"</span>
+    <p class="quote-text">
+      A segurança de um sistema começa pelo entendimento profundo de suas falhas. Estudar é aprender a ver o que a maioria ignora.
+    </p>
+    <p class="quote-author">— Isac Santos</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="section-label">04 — Contato</div>
+  <div class="contato-grid">
+    <div class="reveal">
+      <h2 class="contato-heading">
+        Vamos <em>conversar</em>
+      </h2>
+      <p class="contato-text">
+        Estou aberto a trocar conhecimento, colaborar em projetos de estudo e conectar com pessoas que compartilham a mesma curiosidade pelo mundo digital.
+      </p>
+    </div>
+    <div class="contato-links reveal" style="transition-delay: 0.15s">
+      <a href="mailto:isac.o.dossantos@gmail.com" class="contato-link">
+        ✉ isac.o.dossantos@gmail.com
+        <span class="contato-link-label">E-mail</span>
+      </a>
+      <a href="https://github.com/" target="_blank" class="contato-link">
+        ⌥ github.com/isacsantos74
+        <span class="contato-link-label">GitHub</span>
+      </a>
+      <a href="https://linkedin.com/" target="_blank" class="contato-link">
+        ↗ linkedin.com/in/isac-santos
+        <span class="contato-link-label">LinkedIn</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Isac Santos</span>
+  <span class="footer-copy">© 2025 — Portfólio Pessoal</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal, .timeline-item').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
